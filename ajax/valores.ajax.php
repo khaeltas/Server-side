@@ -54,6 +54,9 @@
 	if (count($respuesta) > 0){
 		foreach ($respuesta as $row => $item)
         {
+            // $item = 'idProducto';
+            // $valor = $item['idProducto'];
+            // $producto = produ
 	        $nestedData=array();
 	        $nestedData[] = "<kbd>".$i."</kbd>";
 	        $nestedData[] = $item['idProducto'];
