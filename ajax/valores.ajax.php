@@ -1,16 +1,19 @@
 <?php
     require_once "../controllers/valoresControllers.php";
+    require_once "../controllers/productosControllers.php";
+
     require_once "../models/valoresModels.php";
+    require_once "../models/productosModels.php";
 
     // almacenar petición ( es decir , obtener / post) array global a una variable
     $requestData= $_REQUEST;
 
     $columns = array( 
         // índice de columna tabla de datos = > nombre de la columna de base de datos
-            0 => 'idNroSerie', 
-            1 => 'idProducto',
-            2 => "nroSerie",
-            3 => "estado"
+        0 => 'idNroSerie', 
+        1 => 'idProducto',
+        2 => "nroSerie",
+        3 => "estado"
     );
 
     $tabla ="series";
@@ -31,8 +34,8 @@
     //Si hay un parámetro de búsqueda , $RequestData [ 'search '] [ ' valor '] 
 	//contiene parámetros de búsqueda.
 	if( !empty($requestData['search']['value']) ) {  
-	    $where.=" AND ( Id LIKE '%".$requestData['search']['value']."%' ";    
-	    $where.=" OR datos LIKE '%".$requestData['search']['value']."%')";
+	    $where.=" AND ( nroSerie LIKE '%".$requestData['search']['value']."%' ";    
+	    $where.=" OR estado LIKE '%".$requestData['search']['value']."%')";
 	}
 
     //Obtener el total de registros con parámetros.
@@ -54,12 +57,13 @@
 	if (count($respuesta) > 0){
 		foreach ($respuesta as $row => $item)
         {
-            // $item = 'idProducto';
-            // $valor = $item['idProducto'];
-            // $producto = produ
+            $itemProducto = 'idProducto';
+            $valorProducto = $item['idProducto'];
+            $producto = ProductosControllers::mostrarProductosControllers($itemProducto, $valorProducto);
+
 	        $nestedData=array();
 	        $nestedData[] = "<kbd>".$i."</kbd>";
-	        $nestedData[] = $item['idProducto'];
+	        $nestedData[] = $producto['descripcion'];
             $nestedData[] = $item['nroSerie'];
             $nestedData[] = $item['estado'];
             $nestedData[] = "<div class='btn-group float-right'>".
